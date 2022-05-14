@@ -72,6 +72,14 @@ public class EmployeeController {
             return R.success(emp);
 
     }
+
+    @PostMapping("/logout")
+    public R<String > loginout(HttpServletRequest request)
+    {
+        request.getSession().removeAttribute("employee");
+        return R.success("退出成功");
+    }
+
 }
 
 //page 0-11

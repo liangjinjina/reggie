@@ -50,6 +50,6 @@ public class Autogenerate {
         mpg.setStrategy(strategy);
         mpg.execute();//启动
     }
-    
+
 
 }
