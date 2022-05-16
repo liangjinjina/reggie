@@ -5,16 +5,15 @@ import com.itwj.reggie.common_class.R;
 import com.itwj.reggie.entity.Employee;
 import com.itwj.reggie.service.EmployeeService;
 import com.reggie.reggie.service.DishService;
-import com.reggie.reggie.service.impl.DishServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @RestController
@@ -28,7 +27,7 @@ public class EmployeeController {
     private DishService dishService;
 
     @PostMapping("/login")
-    public R<Employee> login(HttpServletRequest request, @RequestBody Employee employee) {//前台传过来的username、password（要跟列名一样）映射成Employ实体
+    public R<Employee> login(HttpServletRequest request, HttpServletResponse response, @RequestBody Employee employee) {//前台传过来的username、password（要跟列名一样）映射成Employ实体
 
 /* 1、将页面提交的密码password进行md5加密处理
    2、根据页面提交的用户名username查询数据库
@@ -39,6 +38,7 @@ public class EmployeeController {
 */
 //1、将页面提交的密码password进行md5加密处理
         String password = employee.getPassword();
+        System.out.println(password);
          password= DigestUtils.md5DigestAsHex(password.getBytes());//md5加密知识
 
 //2、根据页面提交的用户名username查询数据库
@@ -68,6 +68,10 @@ public class EmployeeController {
         }
 
             request.getSession().setAttribute("employee", emp.getId());
+
+            Cookie c = new Cookie("JSESSIONID",request.getSession().getId());//设置相同名的session
+            c.setMaxAge(60*60);//设置他的存活时间为1小时
+            response.addCookie(c);//防止用户不小心关闭浏览器，消除了cookie，避免用户短时间内再次进行登录
 
             return R.success(emp);
 
