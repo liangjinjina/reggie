@@ -1,4 +1,4 @@
-package com.itwj.reggie.service;
+package com.itwj.reggie;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
@@ -42,7 +42,7 @@ public class Autogenerate {
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("address_book","dish");//要映射的表名
+        strategy.setInclude("address_book","dish","setmeal_dish");//要映射的表名
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);

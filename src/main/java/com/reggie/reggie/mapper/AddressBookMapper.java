@@ -2,6 +2,7 @@ package com.reggie.reggie.mapper;
 
 import com.reggie.reggie.entity.AddressBook;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author fanshuai
  * @since 2022-05-12
  */
+@Mapper
 public interface AddressBookMapper extends BaseMapper<AddressBook> {
 
 }

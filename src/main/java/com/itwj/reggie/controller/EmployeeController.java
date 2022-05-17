@@ -1,6 +1,7 @@
 package com.itwj.reggie.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.itwj.reggie.Encrypt.Encrypt;
 import com.itwj.reggie.common_class.R;
 import com.itwj.reggie.entity.Employee;
 import com.itwj.reggie.service.EmployeeService;
@@ -15,6 +16,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 @Slf4j
 @RestController
 @RequestMapping("/employee")
@@ -27,7 +29,7 @@ public class EmployeeController {
     private DishService dishService;
 
     @PostMapping("/login")
-    public R<Employee> login(HttpServletRequest request, HttpServletResponse response, @RequestBody Employee employee) {//前台传过来的username、password（要跟列名一样）映射成Employ实体
+    public R<Employee> login(HttpServletRequest request, HttpServletResponse response, @RequestBody Employee employee) throws Exception {//前台传过来的username、password（要跟列名一样）映射成Employ实体
 
 /* 1、将页面提交的密码password进行md5加密处理
    2、根据页面提交的用户名username查询数据库
@@ -37,10 +39,11 @@ public class EmployeeController {
    6、登录成功，将员工id存入5ession并返回登录成功结果
 */
 //1、将页面提交的密码password进行md5加密处理
-        String password = employee.getPassword();
-        System.out.println(password);
-         password= DigestUtils.md5DigestAsHex(password.getBytes());//md5加密知识
+        String key="1234567890123456";
+        String iv ="1234567890123456";
 
+        String password= DigestUtils.md5DigestAsHex(employee.getPassword().getBytes());//md5加密知识
+        System.out.println(password);
 //2、根据页面提交的用户名username查询数据库
         LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();//mybits-p 查询对象
         queryWrapper.eq(Employee::getUsername, employee.getUsername());//mybits-p 查询条件
