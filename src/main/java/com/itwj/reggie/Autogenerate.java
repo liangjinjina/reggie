@@ -42,7 +42,7 @@ public class Autogenerate {
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("address_book","dish","setmeal_dish");//要映射的表名
+        strategy.setInclude("address_book","dish","setmeal_dish","setmeal");//要映射的表名
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);

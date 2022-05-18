@@ -100,8 +100,8 @@
           this.$refs.loginForm.validate(async (valid) => {
             if (valid) {
               this.loading = true
-
-              this.loginForm.password=encypt(this.loginForm.password);
+              this.loginForm.password=encrypt(this.loginForm.password);//加密
+              console.log(this.loginForm.password)
               let res = await loginApi(this.loginForm)//这里调用了api文件中的login.js文件的function loginApi(data)方法，会请求'url': '/employee/login',
               console.log(res.code)
               if (String(res.code) === '1') {//表示登录成功 res.code后台响应值
@@ -116,6 +116,17 @@
         }
       }
     })
+    function encrypt(text) {
+      var key = [ 1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6];
+      var iv = [ 1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6 ];
+      text=text.padStart(16,"0")
+      var textBytes = aesjs.utils.utf8.toBytes(text);//转化为字节流
+      var aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);//初始化加密
+
+      var encryptedBytes = aesCbc.encrypt(textBytes);//加密操作
+      console.log(encryptedBytes)
+      return aesjs.utils.hex.fromBytes(encryptedBytes); //加密后的字节流转化为16进制返回
+    }
 
   </script>
 </body>

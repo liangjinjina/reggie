@@ -796,19 +796,3 @@
 
 
 })(this);
-function encypt(password) {
-    var key =[1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6];
-    var iv =[1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6] ;
-    //获取加密后的密码
-    var text =password.padStart(16,"0");//要加密的文本，补充位数到16位
-
-    var textBytes =aesjs.utils.utf8.toBytes(text)
-
-    var aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
-    var encryptedBytes = aesCbc.encrypt(textBytes);
-
-    var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
-    console.log(encryptedHex);
-    return encryptedHex;
-
-}

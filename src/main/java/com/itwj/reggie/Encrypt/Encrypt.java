@@ -45,8 +45,8 @@ public class Encrypt {
             IvParameterSpec ivspec = new IvParameterSpec(iv.getBytes());
 
             cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec);
-
-            byte[] original = cipher.doFinal(Base64.decodeBase64(data));
+            System.out.println(Base64.decodeBase64(data));
+            byte[] original = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
             String originalString = new String(original);
             return originalString;
         } catch (Exception e) {

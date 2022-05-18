@@ -41,8 +41,8 @@ public class EmployeeController {
 //1、将页面提交的密码password进行md5加密处理
         String key="1234567890123456";
         String iv ="1234567890123456";
-
-        String password= DigestUtils.md5DigestAsHex(employee.getPassword().getBytes());//md5加密知识
+        // String password=Encrypt.desEncrypt(employee.getPassword(),key,iv);
+        String password= DigestUtils.md5DigestAsHex(employee.getPassword().getBytes());//md5加密
         System.out.println(password);
 //2、根据页面提交的用户名username查询数据库
         LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();//mybits-p 查询对象
