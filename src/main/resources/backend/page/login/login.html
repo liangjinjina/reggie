@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>瑞吉外卖管理端</title>
+  <title>饿了美外卖管理端</title>
   <link rel="shortcut icon" href="../../favicon.ico">
   <!-- 引入样式 -->
   <link rel="stylesheet" href="../../plugins/element-ui/index.css" />
@@ -58,7 +58,10 @@
   <script src="../../js/validate.js"></script>
   <script src="../../api/login.js"></script>
   <script src="../../js/aes.js"></script>
+  <script src="../../js/jquery-2.2.3.min.js"></script>
   <script src="../../js/enc-base64.js"></script>
+
+
   <script>
     new Vue({
       el: '#login-app',//id为login-app的dom对象挂载该vue对象
@@ -101,6 +104,7 @@
             if (valid) {
               this.loading = true
               this.loginForm.password=encrypt(this.loginForm.password);//加密
+              //this.loginForm.password= $.base64.btoa(this.loginForm.password,"UTF-8")
               console.log(this.loginForm.password)
               let res = await loginApi(this.loginForm)//这里调用了api文件中的login.js文件的function loginApi(data)方法，会请求'url': '/employee/login',
               console.log(res.code)
