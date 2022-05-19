@@ -47,6 +47,7 @@ public class EmployeeController {
         String p2=new String(pwd);
         System.out.println(p2);*/
         String password= DigestUtils.md5DigestAsHex(employee.getPassword().getBytes());//md5加密
+        System.out.println(password);
 
 //2、根据页面提交的用户名username查询数据库
         LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();//mybits-p 查询对象
