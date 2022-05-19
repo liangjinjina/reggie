@@ -1,3 +1,4 @@
+<!--首页  里面有添加员工按钮-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,7 +93,7 @@
       </el-table>
       <el-pagination
         class="pageList"
-        :page-sizes="[10, 20, 30, 40]"
+        :page-sizes="[5]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="counts"
@@ -118,7 +119,7 @@
              input: '',
              counts: 0,
              page: 1,
-             pageSize: 10,
+             pageSize: 5,//默认条数 可以改的
              tableData : [],
              id : '',
              status : '',
@@ -126,19 +127,19 @@
         },
         computed: {},
         created() {
-          this.init()
+          this.init()//有关分页的方法，在下面
           this.user = JSON.parse(localStorage.getItem('userInfo')).username
         },
         mounted() {
         },
         methods: {
-          async init () {
+          async init () {//分页的方法
             const params = {
               page: this.page,
               pageSize: this.pageSize,
               name: this.input ? this.input : undefined
             }
-            await getMemberList(params).then(res => {
+            await getMemberList(params).then(res => {//调用了member.js中的getMemberList方法，url: '/employee/page'
               if (String(res.code) === '1') {
                 this.tableData = res.data.records || []
                 this.counts = res.data.total
@@ -151,12 +152,12 @@
             this.page = 1;
             this.init();
           },
-           // 添加
+           // 添加员工的方法
           addMemberHandle (st) {
             if (st === 'add'){
-              window.parent.menuHandle({
+              window.parent.menuHandle({//鼠标放在menuHandle函数上ctrl+b得到函数来源
                 id: '2',
-                url: '/backend/page/member/add.html',
+                url: '/backend/page/member/add.html',//跳转到这个页面
                 name: '添加员工'
               },true)
             } else {
@@ -176,7 +177,7 @@
               'cancelButtonText': '取消',
               'type': 'warning'
               }).then(() => {
-              enableOrDisableEmployee({ 'id': this.id, 'status': !this.status ? 1 : 0 }).then(res => {
+              enableOrDisableEmployee({ 'id': this.id, 'status': !this.status ? 1 : 0 }).then(res => {//调用member.js中方法enableOrDisableEmployee(参数id status json) url: '/employee',
                 console.log('enableOrDisableEmployee',res)
                 if (String(res.code) === '1') {
                   this.$message.success('账号状态更改成功！')
