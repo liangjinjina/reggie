@@ -12,3 +12,10 @@ function logoutApi(){
     'method': 'post',
   })
 }
+/*function getpublickey(data) {
+  return $axios({
+    'url': '/getpublickey/login',
+    'method': 'post',
+    data//传给后台的数据
+  })//返回后台给的数据
+}*/

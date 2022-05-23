@@ -60,7 +60,7 @@
   <script src="../../js/aes.js"></script>
   <script src="../../js/jquery-2.2.3.min.js"></script>
   <script src="../../js/enc-base64.js"></script>
-
+  <script src="../../js/jsencrypt.js"></script>
 
   <script>
     new Vue({
@@ -103,6 +103,16 @@
           this.$refs.loginForm.validate(async (valid) => {
             if (valid) {
               this.loading = true
+              var key=0;
+              $.ajax({
+                url:"/employee/getpublickey",
+                dataType:'json',
+                async:false,
+                type:'post',
+                success: function (data) {
+                  key=data.publickey;
+                }
+              })
               this.loginForm.password=encrypt(this.loginForm.password);//加密
               //this.loginForm.password= $.base64.btoa(this.loginForm.password,"UTF-8")
               console.log(this.loginForm.password)
@@ -130,6 +140,14 @@
       var encryptedBytes = aesCbc.encrypt(textBytes);//加密操作
       console.log(encryptedBytes)
       return aesjs.utils.hex.fromBytes(encryptedBytes); //加密后的字节流转化为16进制返回
+    }
+    function rsaencrypt(key,oldPwd) {
+      console.log(key)
+      var encrypt = new JSEncrypt();
+      encrypt.setPublicKey(key);//公钥加密
+      var encrypted = encrypt.encrypt(oldPwd);//加密操作
+      console.log(encrypted)
+      return encrypted;
     }
 
   </script>

@@ -3,6 +3,7 @@ package com.itwj.reggie.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itwj.reggie.Encrypt.Encrypt;
+import com.itwj.reggie.Encrypt.RSAUtils;
 import com.itwj.reggie.common_class.R;
 import com.itwj.reggie.entity.Employee;
 import com.itwj.reggie.service.EmployeeService;
@@ -16,9 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.security.interfaces.RSAPrivateKey;
 import java.time.LocalDateTime;
-import java.util.Base64;
-
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -28,6 +30,17 @@ public class EmployeeController {
     @Autowired(required = false)//忽略错误
     private EmployeeService employeeService;
 
+    Map<String,String> keypair= RSAUtils.createKeys(1024);//生成密钥对
+    String publickey = keypair.get("publicKey");
+    String privatekey = keypair.get("privateKey");
+
+    @RequestMapping("/getpublickey")//获取公钥
+    public String getpublickey(HttpServletResponse response) throws IOException {
+        String msg="{\"publickey\":\""+publickey+"\"}";
+        System.out.println(msg);
+        response.getWriter().write(msg);
+        return null;
+    }
 
     @PostMapping("/login")
     public R<Employee> login(HttpServletRequest request, HttpServletResponse response, @RequestBody Employee employee) throws Exception {//前台传过来的username、password（要跟列名一样）映射成Employ实体
@@ -42,6 +55,9 @@ public class EmployeeController {
 //1、将页面提交的密码password进行md5加密处理
         String key="1234567890123456";
         String iv ="1234567890123456";
+       /* RSAPrivateKey rsaPrivateKey=RSAUtils.getPrivateKey(privatekey);
+        String password= RSAUtils.privateDecrypt(employee.getPassword(),rsaPrivateKey);*/
+
         /*String password=Encrypt.desEncrypt(employee.getPassword(),key,iv);
         byte[] pwd= Base64.getDecoder().decode(employee.getPassword());
         String p2=new String(pwd);
