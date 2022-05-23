@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.interfaces.RSAPrivateKey;
 import java.time.LocalDateTime;
@@ -55,6 +56,7 @@ public class EmployeeController {
 //1、将页面提交的密码password进行md5加密处理
         String key="1234567890123456";
         String iv ="1234567890123456";
+        System.out.println("ssss");
        /* RSAPrivateKey rsaPrivateKey=RSAUtils.getPrivateKey(privatekey);
         String password= RSAUtils.privateDecrypt(employee.getPassword(),rsaPrivateKey);*/
 
@@ -90,10 +92,10 @@ public class EmployeeController {
         if (emp.getStatus() == 0) {//0:禁用 1：不禁用
             return R.error("用户已禁用");
         }
+            HttpSession httpSession=request.getSession();
+            httpSession.setAttribute("employee", emp.getId());
 
-            request.getSession().setAttribute("employee", emp.getId());
-
-            Cookie c = new Cookie("JSESSIONID",request.getSession().getId());//设置相同名的session
+            Cookie c = new Cookie("JSESSIONID",httpSession.getId());//设置相同名的session
             c.setMaxAge(60*60);//设置他的存活时间为1小时
             response.addCookie(c);//防止用户不小心关闭浏览器，消除了cookie，避免用户短时间内再次进行登录
 

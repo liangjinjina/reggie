@@ -1,14 +1,11 @@
 package com.itwj.reggie.Dto;
 
-import com.reggie.reggie.entity.Setmeal;
-import com.reggie.reggie.entity.SetmealDish;
 import lombok.Data;
+
+import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class SetmealDto extends Setmeal {
+public class SetmealDto implements Serializable {
 
-    private List<SetmealDish> setmealDishes;
-
-    private String categoryName;
 }
