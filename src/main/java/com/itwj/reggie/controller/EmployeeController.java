@@ -56,6 +56,7 @@ public class EmployeeController {
 //1、将页面提交的密码password进行md5加密处理
         String key="1234567890123456";
         String iv ="1234567890123456";
+        System.out.println(key);
        /* RSAPrivateKey rsaPrivateKey=RSAUtils.getPrivateKey(privatekey);
         String password= RSAUtils.privateDecrypt(employee.getPassword(),rsaPrivateKey);*/
 
