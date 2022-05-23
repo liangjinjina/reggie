@@ -1,5 +1,6 @@
 package com.itwj.reggie.controller;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itwj.reggie.Encrypt.Encrypt;
@@ -34,13 +35,14 @@ public class EmployeeController {
     Map<String,String> keypair= RSAUtils.createKeys(1024);//生成密钥对
     String publickey = keypair.get("publicKey");
     String privatekey = keypair.get("privateKey");
-
     @RequestMapping("/getpublickey")//获取公钥
     public String getpublickey(HttpServletResponse response) throws IOException {
         String msg="{\"publickey\":\""+publickey+"\"}";
         System.out.println(msg);
         response.getWriter().write(msg);
+        System.out.println("测试");
         return null;
+
     }
 
     @PostMapping("/login")
