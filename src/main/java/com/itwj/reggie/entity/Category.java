@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @JsonSerialize(using= ToStringSerializer.class)//大坑
     private Long id;
 
