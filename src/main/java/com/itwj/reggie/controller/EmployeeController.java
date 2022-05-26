@@ -9,6 +9,7 @@ import com.itwj.reggie.entity.Employee;
 import com.itwj.reggie.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.reflections.serializers.Serializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,8 @@ public class EmployeeController {
     }
 
     @PostMapping("/login")
-    public R<Employee> login(HttpServletRequest request, HttpServletResponse response, @RequestBody Employee employee) throws Exception {//前台传过来的username、password（要跟列名一样）映射成Employ实体
+    public R<Employee> login(HttpServletRequest request, HttpServletResponse response, @RequestBody Employee employee)  throws Exception
+    {//前台传过来的username、password（要跟列名一样）映射成Employ实体
 
 /* 1、将页面提交的密码password进行md5加密处理
    2、根据页面提交的用户名username查询数据库
@@ -94,9 +96,10 @@ public class EmployeeController {
         }
             HttpSession httpSession=request.getSession();
             httpSession.setAttribute("employee", emp.getId());
-
+            //Cookie修改存活期的操作
             Cookie c = new Cookie("JSESSIONID",httpSession.getId());//设置相同名的session
             c.setMaxAge(60*60);//设置他的存活时间为1小时
+            c.setPath("/");//除了value和maxAge之外的所有属性都要与原来的相同才能覆盖，不然会出现两个相同的Cookie
             response.addCookie(c);//防止用户不小心关闭浏览器，消除了cookie，避免用户短时间内再次进行登录
 
             return R.success(emp);
@@ -179,6 +182,8 @@ list.html中: 86 @click="statusHandle(scope.row)"<!--调用方法statusHandle(sc
 
 statusHandle(scope.row)中调用member.js中方法enableOrDisableEmployee(参数id status json) url: '/employee',
 
+
+给实体类的id字段加上注解 @JsonSerialize(using= ToStringSerializer.class)可以解决// 前端只能处理16位数，而后台发送的是19位，导致精度丢失
 
  */
 
