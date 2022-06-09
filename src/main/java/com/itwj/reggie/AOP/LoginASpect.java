@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class LoginASpect {
+public class LoginASpect {//定义一个切面
     private Logger logger=LoggerFactory.getLogger(LoginASpect.class);
 
     //定义了一个切点
