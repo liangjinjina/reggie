@@ -20,6 +20,8 @@ public class WebMvcConfig  extends WebMvcConfigurationSupport {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/backend/**").addResourceLocations("classpath:/backend/");
+        registry.addResourceHandler("/front/**").addResourceLocations("classpath:/front/");
+
         //   super.addResourceHandlers();前端发送过来的请求是...什么样的  .addResourceLocations出现前面的请求就会找classpath:/backend/里面的文件
     }
 }
