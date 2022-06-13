@@ -12,6 +12,7 @@ import com.itwj.reggie.service.CategoryService;
 import com.itwj.reggie.service.DishFlavorService;
 import com.itwj.reggie.service.DishService;
 import org.apache.commons.lang.StringUtils;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -170,5 +171,28 @@ public class DishController {
         }).collect(Collectors.toList());
 
         return R.success(dishDtos);
+    }
+
+    @DeleteMapping
+    public R<String> delete(Long ids){
+        Dish dish= dishService.getById(ids);
+        if (dish.getStatus()==1){
+            return R.error("该菜品正在启售,不能删除!");
+        }
+        dishService.removeById(ids);
+        return R.success("删除菜品成功");
+    }
+
+    @PostMapping("/status/{status}")
+    public R<String> ChangeStatus( Long ids){
+        Dish dish = dishService.getById(ids);
+        Integer status = dish.getStatus();
+        if(status==1){
+            dish.setStatus(0);
+        }else {
+            dish.setStatus(1);
+        }
+        dishService.updateById(dish);
+        return R.success("菜品状态更改成功");
     }
 }

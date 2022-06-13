@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
 public class DishFlavor implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @JsonSerialize(using= ToStringSerializer.class)
+
+    @JsonSerialize(using= ToStringSerializer.class)//大坑
     private Long id;
 
 

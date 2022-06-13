@@ -1,6 +1,7 @@
 package com.itwj.reggie.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.itwj.reggie.Dto.DishDto;
 import com.itwj.reggie.Dto.SetmealDto;
 import com.itwj.reggie.entity.Setmeal;
 
@@ -18,4 +19,8 @@ public interface SetmealService extends IService<Setmeal> {
      * @param ids
      */
     public void removeWithDish(List<Long> ids);
+
+    public SetmealDto getByIdWithFlavor(Long id);
+
+    public void updateWithDish(SetmealDto setmealDto);
 }

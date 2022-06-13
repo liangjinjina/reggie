@@ -2,9 +2,11 @@ package com.itwj.reggie.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.itwj.reggie.Dto.DishDto;
 import com.itwj.reggie.common_class.R;
 import com.itwj.reggie.Dto.SetmealDto;
 import com.itwj.reggie.entity.Category;
+import com.itwj.reggie.entity.Dish;
 import com.itwj.reggie.entity.Setmeal;
 import com.itwj.reggie.service.CategoryService;
 import com.itwj.reggie.service.SetmealDishService;
@@ -118,5 +120,33 @@ public class SetmealController {
         queryWrapper.orderByDesc(Setmeal::getUpdateTime);
 
         return R.success(setmealService.list(queryWrapper));
+    }
+
+    @PostMapping("/status/{status}")
+    public R<String> ChangeStatus( Long ids){
+        Setmeal setmeal = setmealService.getById(ids);
+        Integer status = setmeal.getStatus();
+        if(status==1){
+            setmeal.setStatus(0);
+        }else {
+            setmeal.setStatus(1);
+        }
+        setmealService.updateById(setmeal);
+        return R.success("套餐状态更改成功");
+    }
+
+    @PutMapping
+    public R<String> update(@RequestBody SetmealDto setmealDto){
+
+        setmealService.updateWithDish(setmealDto);
+        return R.success("修改菜品成功");
+    }
+
+    @GetMapping("/{id}")
+    public  R<SetmealDto> get(@PathVariable Long id){
+
+        SetmealDto setmealDto = setmealService.getByIdWithFlavor(id);
+
+        return R.success(setmealDto);
     }
 }
