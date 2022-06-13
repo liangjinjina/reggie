@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 @Mapper
-@Repository
+/*@Repository*/
 public interface  CategoryMapper extends BaseMapper<Category> {
 
 }

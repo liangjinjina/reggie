@@ -34,6 +34,7 @@ public class UserController {
         //获取手机号
         String phone = user.getPhone();
 
+        System.out.println(phone);
         if(StringUtils.isNotEmpty(phone)){
             //生成随机的4位验证码
             String code = ValidateCodeUtils.generateValidateCode(4).toString();
