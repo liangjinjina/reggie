@@ -1,5 +1,7 @@
 package com.itwj.reggie.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,6 +14,7 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonSerialize(using= ToStringSerializer.class)//大坑
     private Long id;
 
 

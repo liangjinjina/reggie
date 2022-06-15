@@ -1,5 +1,7 @@
 package com.itwj.reggie.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 public class ShoppingCart implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @JsonSerialize(using= ToStringSerializer.class)//大坑
     private Long id;
 
     //名称

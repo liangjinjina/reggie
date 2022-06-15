@@ -20,6 +20,7 @@ const editOrderDetail = (params) => {
   return $axios({
     url: '/order',
     method: 'put',
-    data: { ...params }
+    data:{...params}
   })
 }
+

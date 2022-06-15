@@ -82,13 +82,12 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 
     @Override
     public SetmealDto getByIdWithFlavor(Long id) {
-        //查询菜品基本信息，从dish表查询
+
         Setmeal setmeal = setmealService.getById(id);
 
         SetmealDto setmealDto = new SetmealDto();
         BeanUtils.copyProperties(setmeal,setmealDto);
 
-        //查询当前菜品的对应口味信息，从dish_flavor表查询
         LambdaQueryWrapper<SetmealDish> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(SetmealDish::getSetmealId,id);
         List<SetmealDish> dishes = setmealDishService.list(queryWrapper);

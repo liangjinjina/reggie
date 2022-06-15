@@ -1,5 +1,7 @@
 package com.itwj.reggie.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,6 +16,7 @@ public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonSerialize(using= ToStringSerializer.class)//大坑
     private Long id;
 
     //订单号
@@ -24,9 +27,11 @@ public class Orders implements Serializable {
 
 
     //下单用户id
+    @JsonSerialize(using= ToStringSerializer.class)//大坑
     private Long userId;
 
     //地址id
+    @JsonSerialize(using= ToStringSerializer.class)//大坑
     private Long addressBookId;
 
 
