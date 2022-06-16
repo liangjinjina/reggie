@@ -3,15 +3,15 @@ package com.itwj.reggie.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itwj.reggie.common_class.R;
-import com.itwj.reggie.entity.Category;
-import com.itwj.reggie.entity.Employee;
-import com.itwj.reggie.entity.Orders;
+import com.itwj.reggie.entity.*;
+import com.itwj.reggie.service.OrderDetailService;
 import com.itwj.reggie.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 订单
@@ -23,7 +23,8 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
-
+    @Resource
+    private OrderDetailService orderDetailService;
     /**
      * 用户下单
      * @param orders
@@ -62,14 +63,14 @@ public class OrderController {
      * @return
      */
     @GetMapping("/userPage")
-    public R<Page> userpage(int page,int pageSize){
+    public R<Page> userpage(int page, int pageSize, HttpServletRequest request){
         //分页构造器
         Page<Orders> pageInfo = new Page<>(page,pageSize);
         //条件构造器
         LambdaQueryWrapper<Orders> queryWrapper = new LambdaQueryWrapper<>();
         //添加排序条件，根据sort进行排序
         queryWrapper.orderByAsc(Orders::getOrderTime);
-
+        queryWrapper.eq(Orders::getUserId,(Long)request.getSession().getAttribute("user"));
         //分页查询
         orderService.page(pageInfo,queryWrapper);
         return R.success(pageInfo);
